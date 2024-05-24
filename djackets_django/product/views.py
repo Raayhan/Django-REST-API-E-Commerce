@@ -20,7 +20,7 @@ class ProductDetail(APIView):
         except Product.DoesNotExist:
             raise Http404
     
-    def get(self,request,category_slug,product_slug,format=None):
-        product = self.get.object(product_slug,category_slug)
-        serializer = ProductSerializer(products)
+    def get(self, request, category_slug, product_slug, format=None):
+        product = self.get_object(category_slug, product_slug)
+        serializer = ProductSerializer(product)
         return Response(serializer.data)
