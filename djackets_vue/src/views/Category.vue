@@ -55,7 +55,7 @@ export default {
                     console.log(error)
                     toast({
                         message: 'Something went wrong. Please try again.',
-                        type: 'is-danger',
+                        type: 'is-danger has-text-white',
                         dismissible: true,
                         pauseOnHover: true,
                         duration: 2000,

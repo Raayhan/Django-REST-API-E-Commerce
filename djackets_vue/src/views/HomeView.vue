@@ -25,7 +25,7 @@
 
 import axios from 'axios'
 import ProductBox from '@/components/ProductBox.vue'
-
+import {toast} from 'bulma-toast'
 export default {
   name: 'HomeView',
   data() {
@@ -48,6 +48,14 @@ export default {
         .then(response => { this.latestProducts = response.data })
         .catch(error => {
           console.log(error)
+          toast({
+            message: 'Something went wrong. Please try again.',
+            type: 'is-danger has-text-white',
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 2000,
+            position: 'bottom-right',
+          })
         })
       this.$store.commit('setIsLoading', false)
     }
