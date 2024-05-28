@@ -5,7 +5,8 @@
         <router-link to="/" class="navbar-item">
           <strong>Djackets</strong>
         </router-link>
-        <a class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu" @click="showMobileMenu = !showMobileMenu">
+        <a class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu"
+          @click="showMobileMenu = !showMobileMenu">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -37,7 +38,12 @@
           <router-link to="/winter" class="navbar-item">Winter</router-link>
           <div class="navbar-item">
             <div class="buttons">
-              <router-link to="/log-in" class="button is-light">Login</router-link>
+              <template v-if="$store.state.isAuthenticated">
+                <router-link to="/my-account" class="button is-light">My Account</router-link>
+              </template>
+              <template v-else>
+                <router-link to="/log-in" class="button is-light">Login</router-link>
+              </template>
               <router-link to="/cart" class="button is-success">
                 <span class="icon"> <i class="fas fa-shopping-cart"></i></span>
                 <span>Cart ({{ cartTotalLength }})</span>
@@ -48,9 +54,9 @@
       </div>
     </nav>
     <div class="is-loading-bar has-text-centered" v-bind:class="{'is-loading': $store.state.isLoading}">
-    <div class="lds-dual-ring">
+      <div class="lds-dual-ring">
 
-    </div>
+      </div>
     </div>
     <section class="section">
       <router-view />
