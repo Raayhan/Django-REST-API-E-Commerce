@@ -58,8 +58,11 @@ export default {
             errors:[]
         }
     },
+    mounted() {
+        document.title = 'Sign up | Djackets'
+    },
     methods: {
-        submitForm() {
+        async submitForm() {
             this.errors = []
             if (this.username === '') {
                 this.errors.push('The username is missing')
@@ -75,32 +78,32 @@ export default {
                     username: this.username,
                     password:this.password
                 }
-                axios
-                    .post("/api/v1/users/", formData)
-                    .then(response => {
-                            toast({
-                                message: 'Account has been created. Please log in!',
-                                type: 'is-success has-text-white',
-                                dismissible: true,
-                                pauseOnHover: true,
-                                duration: 2000,
-                                position: 'bottom-right',
-                            })
-                            this.$router.push('/log-in')
-                    })
-                    .catch(error => {
-                        if (error.response) {
-                            for (const property in error.response.data) {
-                                this.errors.push(`${property}: ${error.response.data[property]}`)
-                            }
+                await axios
+                        .post("/api/v1/users/", formData)
+                        .then(response => {
+                                toast({
+                                    message: 'Account has been created. Please log in!',
+                                    type: 'is-success has-text-white',
+                                    dismissible: true,
+                                    pauseOnHover: true,
+                                    duration: 2000,
+                                    position: 'bottom-right',
+                                })
+                                this.$router.push('/log-in')
+                        })
+                        .catch(error => {
+                            if (error.response) {
+                                for (const property in error.response.data) {
+                                    this.errors.push(`${property}: ${error.response.data[property]}`)
+                                }
 
-                            console.log(JSON.stringify(error.response.data))
-                        }
-                        else if (error.message) {
-                            this.errors.push('Something went wrong. Please try again later.')
-                            console.log(JSON.stringify(error))
-                        }
-                    })
+                                console.log(JSON.stringify(error.response.data))
+                            }
+                            else if (error.message) {
+                                this.errors.push('Something went wrong. Please try again later.')
+                                console.log(JSON.stringify(error))
+                            }
+                        })
             }
             
         }
