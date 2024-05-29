@@ -13,7 +13,7 @@
           <span aria-hidden="true"></span>
         </a>
       </div>
-      <div class="navbar-menu" id="navbar-menu" v-bind:class="{'is-active':showMobileMenu}">
+      <div class="navbar-menu" id="navbar-menu" v-bind:class="{ 'is-active': showMobileMenu }">
         <div class="navbar-start">
           <div class="navbar-item">
             <form method="get" action="/search">
@@ -41,6 +41,10 @@
               <template v-if="$store.state.isAuthenticated">
                 <router-link to="/my-account" class="button is-light">My Account</router-link>
               </template>
+
+              <template v-if="$store.state.isAuthenticated">
+                <button @click="logout()" class="button is-danger has-text-white">Log out</button>
+              </template>
               <template v-else>
                 <router-link to="/log-in" class="button is-light">Login</router-link>
               </template>
@@ -53,7 +57,7 @@
         </div>
       </div>
     </nav>
-    <div class="is-loading-bar has-text-centered" v-bind:class="{'is-loading': $store.state.isLoading}">
+    <div class="is-loading-bar has-text-centered" v-bind:class="{ 'is-loading': $store.state.isLoading }">
       <div class="lds-dual-ring">
 
       </div>
@@ -85,7 +89,7 @@ export default {
     const token = this.$store.state.token
 
     if (token) {
-      axios.defaults.headers.common['Authorization'] ="Token"+token
+      axios.defaults.headers.common['Authorization'] = "Token" + token
     }
     else {
       axios.defaults.headers.common['Authorization'] = ""
@@ -104,11 +108,26 @@ export default {
 
       return totalLength
     }
+  },
+  methods: {
+    logout() {
+      axios.defaults.headers.common["Authorization"] = ""
+
+      localStorage.removeItem("token")
+      localStorage.removeItem("username")
+      localStorage.removeItem("userid")
+
+      this.$store.commit('removeToken')
+      this.$router.push('/')
+
+    }
   }
+
 }
 </script>
 <style lang="scss">
 @import '../node_modules/bulma';
+
 .lds-dual-ring {
   display: inline-block;
   width: 80px;
