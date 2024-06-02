@@ -54,7 +54,7 @@ const routes = [
     }
   },
   {
-    path: '/cart/checkout/success',
+    path: '/cart/success',
     name: 'Success',
     component: Success,
     meta: {
